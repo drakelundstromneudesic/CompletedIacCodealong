@@ -5,7 +5,7 @@
       "appServicePlanName": {
         "value": "front-end-app-service-plan"
       },
-      "appService": {
+      "appName": {
         "value": "DrakeHasTheBestTickTackToeApp123"
       }
     }
