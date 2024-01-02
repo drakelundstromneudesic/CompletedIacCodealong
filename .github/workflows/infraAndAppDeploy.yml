@@ -50,8 +50,8 @@ jobs:
     needs: build-infrastructure
     runs-on: ubuntu-latest
     steps:
-      # - name: checkout
-      #   uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
 
       - name: Use node.js 14.x
         run: |
