@@ -7,6 +7,7 @@ on:
       - main
 env:
   AZURE_WEBAPP_NAME: DrakeHasTheBestTickTackToeApp456
+  NODE_VERSION: "14.x"
 jobs:
   validate-credentials:
     name: validate azure credentials
@@ -53,10 +54,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: Use node.js 14.x
-        run: |
-          curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-          sudo apt-get install -y nodejs
+      - name: Use node.js ${{env.NODE_VERSION}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{env.NODE_VERSION}}
 
       - name: npm install and build
         run: |
