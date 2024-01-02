@@ -76,7 +76,7 @@ jobs:
 
   logout:
     name: log out of azure
-    needs: deploy-app
+    needs: build-app
     runs-on: ubuntu-latest
     steps:
       - name: logout
