@@ -1,10 +1,10 @@
 # Make sure not to name your pipeline deploy, as this will conflict with the built-in deploy action
-name: deploy infra and app using bash script
+name: deploy infra and app using github functions
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 env:
   NODE_VERSION: "14.x"
 jobs:
@@ -66,9 +66,12 @@ jobs:
           npm run build
 
       - name: upload build artifacts
-        run: |
-          mkdir -p ${{github.workspace}}/frontend-app
-          cp -R frontend/build ${{github.workspace}}/frontend-app
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: frontend-app
+          path: "src/frontend/build"
+          if-no-files-found: error
+          retention-days: 30
 
   deploy-app:
     name: deploy react app
@@ -76,17 +79,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: downloading artifact
-        run: |
-          mkdir -p ${{github.workspace}}/frontend-app
-          curl -sL -o ${{github.workspace}}/frontend-app/artifact.zip <DOWNLOAD_URL> 
+        uses: actions/download-artifact@v2
 
       - name: deploy to azure web app
         id: deploy-to-web-app
-        run: |
-          az webapp deployment source config-zip \
-            --resource-group 'IacReferenceForCodeAlong' \
-            --name ${{env.AZURE_WEBAPP_NAME}} \
-            --src ./artifact.zip
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{env.AZURE_WEBAPP_NAME}}
+          package: ./frontend-app
 
   logout:
     name: log out of azure
