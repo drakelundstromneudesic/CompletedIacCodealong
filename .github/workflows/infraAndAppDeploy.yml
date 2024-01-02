@@ -2,12 +2,10 @@
 name: deploy infra and app using bash script
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 env:
-  AZURE_WEBAPP_NAME: DrakeHasTheBestTickTackToeAppBash
-  AZURE_APPSERVICE_PLAN: front-end-app-service-plan-bash
   NODE_VERSION: "14.x"
 jobs:
   validate-credentials:
@@ -40,13 +38,14 @@ jobs:
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
       
       - name: build infrastructure
-        run: |
-              az deployment group create \
-                --resource-group 'IacReferenceForCodeAlong' \
-                --template-file './infra/main.bicep' \
-                --parameters '@./infra/main.parameters.json' \
-                --parameters appName=${{env.AZURE_WEBAPP_NAME}} appServicePlanName=${{env.AZURE_APPSERVICE_PLAN}} 
-  
+        uses: azure/arm-deploy@v1
+        with:
+          scope: resourcegroup
+          resourceGroupName: 'IacReferenceForCodeAlong'
+          deploymentMode: incremental
+          template: ./infra/main.bicep
+          parameters: ./infra/main.parameters.json
+
   build-app:
     name: build react app
     needs: build-infrastructure
@@ -78,6 +77,7 @@ jobs:
     steps:
       - name: downloading artifact
         run: |
+          mkdir -p ${{github.workspace}}/frontend-app
           curl -sL -o ${{github.workspace}}/frontend-app/artifact.zip <DOWNLOAD_URL> 
 
       - name: deploy to azure web app
