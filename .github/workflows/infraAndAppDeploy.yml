@@ -2,9 +2,9 @@
 name: deploy infra and app using github functions
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+#  push:
+#    branches:
+#      - main
 env:
   NODE_VERSION: "14.x"
 jobs:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
 
       - name: Log in to Azure
         run: |
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
 
       - name: Log in to Azure
         run: |
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
 
       - name: Use node.js ${{env.NODE_VERSION}}
         uses: actions/setup-node@v1
@@ -81,7 +81,6 @@ jobs:
       - name: Log in to Azure
         run: |
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
- 
 
       - name: downloading artifact
         uses: actions/download-artifact@v2
@@ -90,7 +89,7 @@ jobs:
         id: deploy-to-web-app
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{env.AZURE_WEBAPP_NAME}}
+          app-name: DrakeHasTheBestTickTackToeApp123
           package: ./frontend-app
 
   logout:
