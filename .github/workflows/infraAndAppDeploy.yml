@@ -68,7 +68,7 @@ jobs:
       - name: upload build artifacts
         run: |
           mkdir -p ${{github.workspace}}/frontend-app
-          cp -R src/frontend/build ${{github.workspace}}/frontend-app
+          cp -R frontend/build ${{github.workspace}}/frontend-app
 
   deploy-app:
     name: deploy react app
