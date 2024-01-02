@@ -37,7 +37,7 @@ jobs:
       - name: build infrastructure
         run: |
           az deployment group create \
-                --resource-group 'IacReferenceForCodeAlong ' \
+                --resource-group 'IacReferenceForCodeAlong' \
                 --template-file './infra/main.bicep' \
-                --parameters '@./infra/main.bicepparam' \
+                --parameters '@./infra/main.parameters.json' \
   
