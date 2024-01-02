@@ -81,7 +81,7 @@ jobs:
           az webapp deployment source config-zip \
             --resource-group 'IacReferenceForCodeAlong' \
             --name ${{env.AZURE_WEBAPP_NAME}} \
-            --src ../build.zip
+            --src frontend/build.zip
 
   #     - name: upload build artifacts
   #       run: |
