@@ -37,7 +37,10 @@ jobs:
       - name: build infrastructure
         run: |
           ls
+          cd infra
+          ls
       - name: logout
         run: |
           az logout
+  
   
