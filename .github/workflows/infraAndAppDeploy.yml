@@ -1,0 +1,27 @@
+# Make sure not to name your pipeline deploy, as this will conflict with the built-in deploy action
+name: deploy infra and app
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Log in to Azure
+        run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+# generate credentials using this command, then store them in GitHub secrets
+# az ad sp create-for-rbac --name "pipelineCredentials" --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} 
+
+      - name: logout
+        run: |
+          az logout
+
+      
+  
