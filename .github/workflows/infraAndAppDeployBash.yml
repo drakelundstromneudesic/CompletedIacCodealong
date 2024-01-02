@@ -83,7 +83,7 @@ jobs:
       - name: downloading artifact
         run: |
           mkdir -p ${{github.workspace}}/frontend-app
-          curl -sL -o ${{github.workspace}}/frontend-app/artifact.zip <DOWNLOAD_URL>
+          curl -sL -o ${{github.workspace}}/frontend-app/artifact.zip ${{ steps.build-app.outputs.artifact-url }}
           unzip ${{github.workspace}}/frontend-app/artifact.zip -d ${{github.workspace}}/frontend-app
 
       - name: deploy to azure web app
