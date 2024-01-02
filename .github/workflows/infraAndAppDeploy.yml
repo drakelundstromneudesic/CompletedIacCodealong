@@ -91,12 +91,3 @@ jobs:
         with:
           app-name: DrakeHasTheBestTickTackToeApp123
           package: ./frontend-app
-
-  logout:
-    name: log out of azure
-    needs: deploy-app
-    runs-on: ubuntu-latest
-    steps:
-      - name: logout
-        run: |
-          az logout
