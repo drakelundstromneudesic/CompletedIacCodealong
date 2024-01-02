@@ -87,7 +87,7 @@ jobs:
           az webapp deployment source config-zip \
             --resource-group 'IacReferenceForCodeAlong' \
             --name ${{env.AZURE_WEBAPP_NAME}} \
-            --src ./artifact-app.zip
+            --src ./artifact.zip
 
   logout:
     name: log out of azure
