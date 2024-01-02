@@ -6,8 +6,8 @@ on:
     branches:
       - main
 jobs:
-  validate:
-    name: validate
+  validate-credentials:
+    name: validate azure credentials
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -22,6 +22,23 @@ jobs:
       - name: logout
         run: |
           az logout
+  build-infrastructure:
+    name: build infrastructure
+    needs: validate-credentials
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
 
+      - name: Log in to Azure
+        run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
       
+      - name: build infrastructure
+        run: |
+          cd infra
+          az deployment group create \
+                --resource-group 'IacReferenceForCodeAlong ' \
+                --template-file 'main.bicep' \
+                --parameters 'main.bicepparam' \
   
