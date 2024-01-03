@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from 'react';
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -16,24 +17,24 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-function moveCompare(move) {
-  const thisRound = history[move]
-  const previousRound = history[move-1]
+  function moveCompare(move) {
+    const thisRound = history[move]
+    const previousRound = history[move - 1]
 
-  let whoMoved = ""
-let column = ""
-let row = ""
+    let whoMoved = ""
+    let column = ""
+    let row = ""
 
 
-  for (let i = 0; i < thisRound.length; i++) {
-if (thisRound[i] != previousRound[i]) {
-  whoMoved = thisRound[i]
-  column = ((i%3)+1).toString()
-  row = (Math.floor(i/3)+1).toString()
-}
+    for (let i = 0; i < thisRound.length; i++) {
+      if (thisRound[i] != previousRound[i]) {
+        whoMoved = thisRound[i]
+        column = ((i % 3) + 1).toString()
+        row = (Math.floor(i / 3) + 1).toString()
+      }
+    }
+    return [whoMoved, column, row]
   }
-  return [whoMoved, column, row]
-}
 
   const moves = history.map((squares, move) => {
     let description;
@@ -42,7 +43,7 @@ if (thisRound[i] != previousRound[i]) {
       if (move > 0) {
         description = "Go to move #" + move;
         const moveCompareResults = moveCompare(move)
-        moveLocation= `  ${moveCompareResults[0]} played at Column ${moveCompareResults[1]}, Row ${moveCompareResults[2]}`;
+        moveLocation = `  ${moveCompareResults[0]} played at Column ${moveCompareResults[1]}, Row ${moveCompareResults[2]}`;
       } else {
         description = "Go to game start";
       }
@@ -50,20 +51,20 @@ if (thisRound[i] != previousRound[i]) {
       if (move < history.length - 1) {
         description = "Go to move #" + (history.length - move - 1);
         const moveCompareResults = moveCompare(history.length - move - 1)
-        moveLocation= `  ${moveCompareResults[0]} played at Column ${moveCompareResults[1]}, Row ${moveCompareResults[2]}`;
+        moveLocation = `  ${moveCompareResults[0]} played at Column ${moveCompareResults[1]}, Row ${moveCompareResults[2]}`;
       } else {
         description = "Go to game start";
       }
     }
     return (
       <li key={move}>
-        <div style={{display:"flex"}}>
-        <button
-          onClick={() => jumpTo(isAscending ? move : history.length - move - 1)}
-        >
-          {description}
-        </button>
-        <div style={{paddingLeft: 5}}>{moveLocation}</div>
+        <div style={{ display: "flex" }}>
+          <button
+            onClick={() => jumpTo(isAscending ? move : history.length - move - 1)}
+          >
+            {description}
+          </button>
+          <div style={{ paddingLeft: 5 }}>{moveLocation}</div>
         </div>
       </li>
     );
@@ -122,7 +123,7 @@ function Board({ xIsNext, squares, onPlay }) {
   ];
 
   return (
-    <>
+    <React.Fragment>
       <div className="status">{status}</div>
       {tiles.map((row) => (
         <div key={row} className="board-row">
@@ -138,7 +139,7 @@ function Board({ xIsNext, squares, onPlay }) {
           ))}
         </div>
       ))}
-    </>
+    </React.Fragment>
   );
 }
 
