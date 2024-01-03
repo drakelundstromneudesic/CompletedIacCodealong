@@ -82,10 +82,9 @@ jobs:
 
       - name: downloading artifact
         run: |
-            curl -sLO ${{ steps.upload-app.outputs.url }}
+            curl -sLO ${{github.workspace}}/frontend-app
       
       - name: deploy to azure web app
-        id: deploy-to-web-app
         run: |
           az webapp deployment source config-zip \
             --resource-group 'IacReferenceForCodeAlong' \
