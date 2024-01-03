@@ -1,5 +1,5 @@
 # Make sure not to name your pipeline deploy, as this will conflict with the built-in deploy action
-name: deploy infra and app using bash script
+name: deploy infra and app using a mix of bash and github actions
 on:
   workflow_dispatch:
   push:
