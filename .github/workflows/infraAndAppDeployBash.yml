@@ -47,8 +47,8 @@ jobs:
                 --parameters '@./infra/main.parameters.json' \
                 --parameters appName=${{env.AZURE_WEBAPP_NAME}} appServicePlanName=${{env.AZURE_APPSERVICE_PLAN}} 
   
-  build-app:
-    name: build react app
+  build-and-deploy-app:
+    name: build and deploy react app
     needs: build-infrastructure
     runs-on: ubuntu-latest
     steps:
