@@ -6,8 +6,8 @@ on:
     branches:
       - main
 env:
-  AZURE_WEBAPP_NAME: DrakeHasTheBestTickTackToeAppBash
-  AZURE_APPSERVICE_PLAN: front-end-app-service-plan-bash
+  AZURE_WEBAPP_NAME: DrakeHasTheBestTickTackToeAppHybrid
+  AZURE_APPSERVICE_PLAN: front-end-app-service-plan-hybrid
   NODE_VERSION: "14.x"
 jobs:
   validate-credentials:
@@ -92,4 +92,4 @@ jobs:
           az webapp deployment source config-zip \
             --resource-group 'IacReferenceForCodeAlong' \
             --name ${{env.AZURE_WEBAPP_NAME}} \
-            --src ./frontend-app
+            --src ./frontend-app.zip
