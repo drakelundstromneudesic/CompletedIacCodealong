@@ -67,6 +67,7 @@ jobs:
           npm run build
 
       - name: upload build artifacts
+        id: upload-app
         run: |
           mkdir -p ${{github.workspace}}/frontend-app
           cp -R frontend/build ${{github.workspace}}/frontend-app
@@ -81,7 +82,7 @@ jobs:
 
       - name: downloading artifact
         run: |
-            curl -sLO ${{ steps.deploy-to-web-app.outputs.zip_url }}
+            curl -sLO ${{ steps.upload-app.outputs.url }}
       
       - name: deploy to azure web app
         id: deploy-to-web-app
