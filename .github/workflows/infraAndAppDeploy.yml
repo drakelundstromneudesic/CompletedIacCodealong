@@ -2,9 +2,9 @@
 name: deploy infra and app using github functions
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 env:
   NODE_VERSION: "14.x"
 jobs:

@@ -2,9 +2,9 @@
 name: deploy infra and app using bash script
 on:
   workflow_dispatch:
- # push:
-  #  branches:
-  #    - main
+  push:
+    branches:
+      - main
 env:
   AZURE_WEBAPP_NAME: DrakeHasTheBestTickTackToeAppBash
   AZURE_APPSERVICE_PLAN: front-end-app-service-plan-bash
@@ -66,7 +66,6 @@ jobs:
           npm install
           npm run build
 
-# delete this
       - name: upload build artifacts
         run: |
           mkdir -p ${{github.workspace}}/frontend-app
@@ -80,7 +79,6 @@ jobs:
         run: |
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
 
-# delete this
       - name: downloading artifact
         run: |
             curl -sLO ${{ steps.deploy-to-web-app.outputs.artifact_url }}
