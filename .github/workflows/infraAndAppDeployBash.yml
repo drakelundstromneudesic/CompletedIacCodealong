@@ -2,9 +2,9 @@
 name: deploy infra and app using bash script
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 env:
   AZURE_WEBAPP_NAME: DrakeHasTheBestTickTackToeAppBash
   AZURE_APPSERVICE_PLAN: front-end-app-service-plan-bash
