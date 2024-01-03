@@ -81,7 +81,7 @@ jobs:
 
       - name: downloading artifact
         run: |
-            curl -sLO ${{ steps.deploy-to-web-app.outputs.artifact_url }}
+            curl -sLO ${{ steps.deploy-to-web-app.outputs.zip_url }}
       
       - name: deploy to azure web app
         id: deploy-to-web-app
