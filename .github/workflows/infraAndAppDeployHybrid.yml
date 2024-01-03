@@ -89,7 +89,8 @@ jobs:
       - name: deploy to azure web app
         id: deploy-to-web-app
         run: |
+          ls
           az webapp deployment source config-zip \
             --resource-group 'IacReferenceForCodeAlong' \
             --name ${{env.AZURE_WEBAPP_NAME}} \
-            --src ./frontend-app.zip
+            --src ./frontend-app
